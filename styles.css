@@ -134,7 +134,7 @@ body {
 
 .card-image {
     width: 100%;
-    height: 150px;
+    height: auto; /* إزالة الارتفاع الثابت لعرض الصور بالكامل */
     object-fit: cover;
     border-radius: 5px;
     margin-bottom: 1rem;
@@ -264,5 +264,9 @@ footer p {
 
     .video-container video {
         height: 200px;
+    }
+
+    .card-image {
+        height: auto; /* الحفاظ على النسبة في الأجهزة الصغيرة */
     }
 }
