@@ -1,0 +1,102 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بيئتنا اليوم - المقالات</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">بيئتنا اليوم</div>
+        <ul class="nav-links">
+            <li><a href="index.html">الرئيسية</a></li>
+            <li><a href="articles.html">المقالات</a></li>
+            <li><a href="about.html">من نحن</a></li>
+            <li><a href="video.html">فيديو</a></li>
+            <li><a href="infographic.html">إنفوغرافيك</a></li>
+            <li><a href="contact.html">تواصل معنا</a></li>
+        </ul>
+        <div class="burger">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </nav>
+
+    <!-- Articles Section -->
+    <section class="section">
+        <h2>المقالات البيئية</h2>
+        <div class="grid">
+            <div class="card">
+                <img src="pollution.jpg" alt="التلوث" class="card-image">
+                <h3>التلوث: تهديد متزايد</h3>
+                <p>يتسبب التلوث البيئي في أضرار جسيمة للصحة والبيئة. في عام 2024، سجلت المدن الكبرى ارتفاعًا في مستويات التلوث بنسبة 15%.</p>
+            </div>
+            <div class="card">
+                <img src="sustainability.jpg" alt="الاستدامة" class="card-image">
+                <h3>الاستدامة: مستقبل أخضر</h3>
+                <p>تعتمد الاستدامة على استخدام الموارد بطريقة تحافظ على البيئة للأجيال القادمة. مبادرات إعادة التدوير تكتسب زخمًا عالميًا.</p>
+            </div>
+            <div class="card">
+                <img src="climate.jpg" alt="تغير المناخ" class="card-image">
+                <h3>تغير المناخ: تحدي العصر</h3>
+                <p>ارتفاع درجات الحرارة العالمية يهدد الأنظمة البيئية. العلماء يحذرون من ذوبان الأنهار الجليدية بمعدل غير مسبوق.</p>
+            </div>
+            <div class="card">
+                <img src="biodiversity.jpg" alt="التنوع البيولوجي" class="card-image">
+                <h3>الحفاظ على التنوع البيولوجي</h3>
+                <p>فقدان التنوع البيولوجي يؤثر على التوازن البيئي. جهود عالمية تهدف إلى حماية الأنواع المهددة بالانقراض.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>مشروع جامعي - بيئتنا اليوم © 2025</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
