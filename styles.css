@@ -134,10 +134,11 @@ body {
 
 .card-image {
     width: 100%;
-    height: auto; /* إزالة الارتفاع الثابت لعرض الصور بالكامل */
-    object-fit: cover;
+    height: auto;
+    object-fit: contain; /* تغيير من cover إلى contain لعرض الصورة كاملة */
     border-radius: 5px;
     margin-bottom: 1rem;
+    max-height: 300px; /* حد أقصى للارتفاع لتجنب الصور الكبيرة جدًا */
 }
 
 .card h3 {
@@ -267,6 +268,9 @@ footer p {
     }
 
     .card-image {
-        height: auto; /* الحفاظ على النسبة في الأجهزة الصغيرة */
+        width: 100%;
+        height: auto;
+        object-fit: contain; /* عرض الصورة كاملة على الموبايل */
+        max-height: 200px; /* تقليل الحد الأقصى للارتفاع على الموبايل */
     }
 }
