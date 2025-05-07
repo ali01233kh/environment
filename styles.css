@@ -108,7 +108,7 @@ body {
 
 .section h2 {
     font-size: 2rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     color: #2e7d32;
 }
 
@@ -177,16 +177,26 @@ th {
 }
 
 .video-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.video-container iframe {
+.video-container h3 {
+    font-size: 1.4rem;
+    color: #2e7d32;
+    margin-bottom: 1rem;
+}
+
+.video-container video {
     width: 100%;
-    max-width: 800px;
-    height: 450px;
-    border-radius: 10px;
+    height: auto;
+    border-radius: 5px;
 }
 
 .infographic-image {
@@ -248,7 +258,11 @@ footer p {
         font-size: 1.5rem;
     }
 
-    .video-container iframe {
-        height: 300px;
+    .video-container {
+        max-width: 100%;
+    }
+
+    .video-container video {
+        height: 200px;
     }
 }
